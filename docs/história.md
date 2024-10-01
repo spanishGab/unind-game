@@ -1,0 +1,5 @@
+Unind sempre foi uma bela terra. Seus vales e cachoeiras, suas frondosas árvoes e montanhas estendiam-se por toda a terra. Lá, todos os povos viviam em harmonia, cada um a sua maneira, contribuindo para a manutenção da vida.
+
+Até que um dia, nascera Colun, o filho das sombras, como ficou conhecido anos depois. Colun nasceu um humano comum, mas com um interesse particular por poder e magia, que estudou com os magos de Ut'Gorithar, os únicos que ainda ensinavam aos humanos.
+
+No princípio, Colun usava a magia apenas para satisfazer seus desejos, mas com o tempo, sua sede pelo poder cresceu e seus desejos tornaram-se sombrios. Assim, Colun decidiu que seria o imperador de Unind. Ele começou instilando a dúvida no coração dos humanos, dizendo a eles que os outros povos tramavam para eliminá-los, pois, inferiores que eram, temiam ser eliminados pelos humanos um dia. Após reunir um número considerável de humanos para a sua causa, fez da velha fortaleza abandonada de Ut'Manumbar seu abrigo. E com o tempo, elaborou ataques a vilarejos de anãos e elfos, fazendo com que a guerra se alastrasse até a longínqua Lund, ao sul, onde estabeleceu sua última fortaleza.
