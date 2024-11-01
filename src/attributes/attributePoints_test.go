@@ -2,9 +2,13 @@ package attributes
 
 import (
 	"fmt"
-	"spanishgab/unind/src/errors"
 	"testing"
 )
+
+func createInternalErrorMessage(errorMessage string, t *testing.T) string {
+	t.Helper()
+	return fmt.Sprintf("internal-error: %s", errorMessage)
+}
 
 func TestGet(t *testing.T) {
 	attributePoints := AttributePoints{
@@ -22,13 +26,11 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("Should return an error when the given key does not exist", func(t *testing.T) {
-		var expected *errors.InternalError = errors.NewInternalError(
-			fmt.Sprintf(ATTRIBUTE_NOT_FOUND, DEFENSE),
-		)
+		expected := createInternalErrorMessage(fmt.Sprintf(ATTRIBUTE_NOT_FOUND, DEFENSE), t)
 		_, got := attributePoints.Get(DEFENSE)
 
-		if got.Error() != expected.Error() {
-			t.Errorf("expected: %q, got: %q", expected.Error(), got.Error())
+		if got.Error() != expected {
+			t.Errorf("expected: %q, got: %q", expected, got.Error())
 		}
 
 	})
@@ -37,26 +39,26 @@ func TestGet(t *testing.T) {
 func TestHas(t *testing.T) {
 	attributePoints := AttributePoints{
 		points: map[Attribute]float64{
-			ATTACK: 45,
-			DEFENSE: 62,
+			ATTACK:       45,
+			DEFENSE:      62,
 			INTELLIGENCE: 50,
 		},
 	}
-	
-	params := []struct{
-		should string
+
+	params := []struct {
+		should    string
 		attribute string
-		expected bool
+		expected  bool
 	}{
 		{
-			should: "return true when the given attribute exists",
+			should:    "return true when the given attribute exists",
 			attribute: string(INTELLIGENCE),
-			expected: true,
+			expected:  true,
 		},
 		{
-			should: "return false when the given attribute does not exist",
+			should:    "return false when the given attribute does not exist",
 			attribute: "potato",
-			expected: false,
+			expected:  false,
 		},
 	}
 	for _, param := range params {
@@ -73,7 +75,7 @@ func TestHas(t *testing.T) {
 func TestIncrease(t *testing.T) {
 	attributePoints := AttributePoints{
 		points: map[Attribute]float64{
-			ATTACK: 45,
+			ATTACK:  45,
 			DEFENSE: 62,
 		},
 	}
@@ -88,24 +90,20 @@ func TestIncrease(t *testing.T) {
 	})
 
 	t.Run("Should return an error when trying to increase an inexistent attribute", func(t *testing.T) {
-		var expected *errors.InternalError = errors.NewInternalError(
-			fmt.Sprintf(ATTRIBUTE_NOT_FOUND, HEALTH),
-		)
+		expected := createInternalErrorMessage(fmt.Sprintf(ATTRIBUTE_NOT_FOUND, HEALTH), t)
 		got := attributePoints.Increase(HEALTH, 3)
 
-		if got.Error() != expected.Error() {
-			t.Errorf("expected: %q, got %q", expected.Error(), got.Error())
+		if got.Error() != expected {
+			t.Errorf("expected: %q, got %q", expected, got.Error())
 		}
 	})
 
 	t.Run("Should return an error when the increasing points are less than zero", func(t *testing.T) {
-		var expected *errors.InternalError = errors.NewInternalError(
-			INVALID_INCREASING_VALUE,
-		)
+		expected := createInternalErrorMessage(INVALID_INCREASING_VALUE, t)
 		got := attributePoints.Increase(ATTACK, -3)
 
-		if got.Error() != expected.Error() {
-			t.Errorf("expected: %q, got %q", expected.Error(), got.Error())
+		if got.Error() != expected {
+			t.Errorf("expected: %q, got %q", expected, got.Error())
 		}
 	})
 }
@@ -113,7 +111,7 @@ func TestIncrease(t *testing.T) {
 func TestDecrease(t *testing.T) {
 	attributePoints := AttributePoints{
 		points: map[Attribute]float64{
-			ATTACK: 45,
+			ATTACK:  45,
 			DEFENSE: 62,
 		},
 	}
@@ -128,24 +126,20 @@ func TestDecrease(t *testing.T) {
 	})
 
 	t.Run("Should return an error when trying to decrease an inexistent attribute", func(t *testing.T) {
-		var expected *errors.InternalError = errors.NewInternalError(
-			fmt.Sprintf(ATTRIBUTE_NOT_FOUND, HEALTH),
-		)
+		expected := createInternalErrorMessage(fmt.Sprintf(ATTRIBUTE_NOT_FOUND, HEALTH), t)
 		got := attributePoints.Decrease(HEALTH, 3)
 
-		if got.Error() != expected.Error() {
-			t.Errorf("expected: %q, got %q", expected.Error(), got.Error())
+		if got.Error() != expected {
+			t.Errorf("expected: %q, got %q", expected, got.Error())
 		}
 	})
 
 	t.Run("Should return an error when the decreasing points are greater than zero", func(t *testing.T) {
-		var expected *errors.InternalError = errors.NewInternalError(
-			INVALID_DECREASING_VALUE,
-		)
+		expected := createInternalErrorMessage(INVALID_DECREASING_VALUE, t)
 		got := attributePoints.Decrease(ATTACK, 3)
 
-		if got.Error() != expected.Error() {
-			t.Errorf("expected: %q, got %q", expected.Error(), got.Error())
+		if got.Error() != expected {
+			t.Errorf("expected: %q, got %q", expected, got.Error())
 		}
 	})
 }
