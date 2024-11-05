@@ -11,11 +11,7 @@ func createInternalErrorMessage(errorMessage string, t *testing.T) string {
 }
 
 func TestGet(t *testing.T) {
-	attributePoints := AttributePoints{
-		points: map[Attribute]float64{
-			ATTACK: 45,
-		},
-	}
+	attributePoints, _ := NewBattlePoints(45, 0)
 	t.Run("Should return a value for an existing key", func(t *testing.T) {
 		var expected float64 = 45.0
 		got, _ := attributePoints.Get(ATTACK)
@@ -26,8 +22,8 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("Should return an error when the given key does not exist", func(t *testing.T) {
-		expected := createInternalErrorMessage(fmt.Sprintf(ATTRIBUTE_NOT_FOUND, DEFENSE), t)
-		_, got := attributePoints.Get(DEFENSE)
+		expected := createInternalErrorMessage(fmt.Sprintf(ATTRIBUTE_NOT_FOUND, HEALTH), t)
+		_, got := attributePoints.Get(HEALTH)
 
 		if got.Error() != expected {
 			t.Errorf("expected: %q, got: %q", expected, got.Error())
@@ -37,13 +33,7 @@ func TestGet(t *testing.T) {
 }
 
 func TestHas(t *testing.T) {
-	attributePoints := AttributePoints{
-		points: map[Attribute]float64{
-			ATTACK:       45,
-			DEFENSE:      62,
-			INTELLIGENCE: 50,
-		},
-	}
+	attributePoints, _ := NewIntelligencePoints(50)
 
 	params := []struct {
 		should    string
@@ -73,12 +63,7 @@ func TestHas(t *testing.T) {
 }
 
 func TestIncrease(t *testing.T) {
-	attributePoints := AttributePoints{
-		points: map[Attribute]float64{
-			ATTACK:  45,
-			DEFENSE: 62,
-		},
-	}
+	attributePoints, _ := NewBattlePoints(45, 62)
 	t.Run("Should increase an attribute's value", func(t *testing.T) {
 		var expected float64 = 65.0
 		attributePoints.Increase(DEFENSE, 3)
@@ -109,12 +94,7 @@ func TestIncrease(t *testing.T) {
 }
 
 func TestDecrease(t *testing.T) {
-	attributePoints := AttributePoints{
-		points: map[Attribute]float64{
-			ATTACK:  45,
-			DEFENSE: 62,
-		},
-	}
+	attributePoints, _ := NewBattlePoints(45, 62)
 	t.Run("Should decrease an attribute's value", func(t *testing.T) {
 		var expected float64 = 55.0
 		attributePoints.Decrease(DEFENSE, -7)
@@ -140,6 +120,25 @@ func TestDecrease(t *testing.T) {
 
 		if got.Error() != expected {
 			t.Errorf("expected: %q, got %q", expected, got.Error())
+		}
+	})
+}
+
+func TestCheckAttributeValues(t *testing.T) {
+	t.Run("Should return an error when any of the given values are less than zero", func(t *testing.T) {
+		expected := createInternalErrorMessage(INVALID_ATTRIBUTE_VALUE, t)
+		got := checkAttributeValues(30, 25, -1)
+
+		if got.Error() != expected {
+			t.Errorf("expected: %q, got: %q", expected, got.Error())
+		}
+	})
+
+	t.Run("Should return nil all of the given values are greater than or equal to zero", func(t *testing.T) {
+		got := checkAttributeValues(30, 25, 0)
+
+		if got != nil {
+			t.Errorf("expected; nil, got: %q", got.Error())
 		}
 	})
 }
