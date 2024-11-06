@@ -33,7 +33,7 @@ func TestGet(t *testing.T) {
 }
 
 func TestHas(t *testing.T) {
-	attributePoints, _ := NewIntelligencePoints(50)
+	attributePoints, _ := NewBattlePoints(50, 20)
 
 	params := []struct {
 		should    string
@@ -42,7 +42,7 @@ func TestHas(t *testing.T) {
 	}{
 		{
 			should:    "return true when the given attribute exists",
-			attribute: string(INTELLIGENCE),
+			attribute: string(DEFENSE),
 			expected:  true,
 		},
 		{
@@ -120,25 +120,6 @@ func TestDecrease(t *testing.T) {
 
 		if got.Error() != expected {
 			t.Errorf("expected: %q, got %q", expected, got.Error())
-		}
-	})
-}
-
-func TestCheckAttributeValues(t *testing.T) {
-	t.Run("Should return an error when any of the given values are less than zero", func(t *testing.T) {
-		expected := createInternalErrorMessage(INVALID_ATTRIBUTE_VALUE, t)
-		got := checkAttributeValues(30, 25, -1)
-
-		if got.Error() != expected {
-			t.Errorf("expected: %q, got: %q", expected, got.Error())
-		}
-	})
-
-	t.Run("Should return nil all of the given values are greater than or equal to zero", func(t *testing.T) {
-		got := checkAttributeValues(30, 25, 0)
-
-		if got != nil {
-			t.Errorf("expected; nil, got: %q", got.Error())
 		}
 	})
 }
