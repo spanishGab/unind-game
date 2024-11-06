@@ -6,7 +6,7 @@ As armas serão espalhadas pelo jogo de acordo com o nível em que o personagem 
 
 ### Espada 🗡️
 
-Aumenta pontos de ataque. Disponível para:
+Amenta pontos de ataque e defesa (em menor quantidade). Disponível para:
 
 - Humano
 - Elfo
