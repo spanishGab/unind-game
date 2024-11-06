@@ -3,13 +3,14 @@ package attributes
 import (
 	"fmt"
 	"spanishgab/unind/src/errors"
+	"spanishgab/unind/src/utils"
 )
 
 const (
-	ATTRIBUTE_NOT_FOUND      = "attribute %q does not exist"
-	INVALID_ATTRIBUTE_VALUE  = "attribute values must be greater than zero"
-	INVALID_INCREASING_VALUE = "increasing value must be greater than zero"
-	INVALID_DECREASING_VALUE = "decreasing value must be less than zero"
+	ATTRIBUTE_NOT_FOUND      string = "attribute %q does not exist"
+	INVALID_ATTRIBUTE_VALUE  string = "attribute values must be greater than zero"
+	INVALID_INCREASING_VALUE string = "increasing value must be greater than zero"
+	INVALID_DECREASING_VALUE string = "decreasing value must be less than zero"
 )
 
 type Attribute string
@@ -19,43 +20,52 @@ const (
 	DEFENSE      Attribute = "defense"
 	HEALTH       Attribute = "healh"
 	INTELLIGENCE Attribute = "intelligence"
+	STRENGTH     Attribute = "strength"
 )
 
 type AttributePoints struct {
 	points map[Attribute]float64
 }
 
+func New(
+	attackPoints float64,
+	defensePoints float64,
+	healthPoints float64,
+	intelligencePoints float64,
+	strengthPoints float64,
+) (*AttributePoints, *errors.InternalError) {
+	if !utils.AreAllPositive(
+		attackPoints,
+		defensePoints,
+		attackPoints,
+		defensePoints,
+		healthPoints,
+		intelligencePoints,
+		strengthPoints,
+	) {
+		return nil, errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+	}
+
+	return &AttributePoints{
+		points: map[Attribute]float64{
+			ATTACK:       attackPoints,
+			DEFENSE:      defensePoints,
+			HEALTH:       healthPoints,
+			INTELLIGENCE: intelligencePoints,
+			STRENGTH:     strengthPoints,
+		},
+	}, nil
+}
+
 func NewBattlePoints(attackPoints, defensePoints float64) (*AttributePoints, *errors.InternalError) {
-	if err := checkAttributeValues(attackPoints, defensePoints); err != nil {
-		return nil, err
+	if !utils.AreAllPositive(attackPoints, defensePoints) {
+		return nil, errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
 	}
 
 	return &AttributePoints{
 		points: map[Attribute]float64{
 			ATTACK:  attackPoints,
 			DEFENSE: defensePoints,
-		},
-	}, nil
-}
-
-func NewHealthPoints(healthPoints float64) (*AttributePoints, *errors.InternalError) {
-	if err := checkAttributeValues(healthPoints); err != nil {
-		return nil, err
-	}
-	return &AttributePoints{
-		points: map[Attribute]float64{
-			HEALTH: healthPoints,
-		},
-	}, nil
-}
-
-func NewIntelligencePoints(intelligencePoints float64) (*AttributePoints, *errors.InternalError) {
-	if err := checkAttributeValues(intelligencePoints); err != nil {
-		return nil, err
-	}
-	return &AttributePoints{
-		points: map[Attribute]float64{
-			INTELLIGENCE: intelligencePoints,
 		},
 	}, nil
 }
@@ -98,14 +108,5 @@ func (ap *AttributePoints) Decrease(attribute Attribute, points float64) *errors
 		return errors.NewInternalError(INVALID_DECREASING_VALUE)
 	}
 	ap.points[attribute] += points
-	return nil
-}
-
-func checkAttributeValues(value ...float64) *errors.InternalError {
-	for _, attributePoint := range value {
-		if attributePoint < 0 {
-			return errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
-		}
-	}
 	return nil
 }
