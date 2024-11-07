@@ -1,7 +1,7 @@
 package weapons
 
 import (
-	"spanishgab/unind/src/attributes"
+	"spanishgab/unind/src/domain/attributes"
 	"spanishgab/unind/src/errors"
 )
 
