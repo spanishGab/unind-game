@@ -130,6 +130,8 @@ Os níveis de dificuldade afetam na quantidade de inimigos enfrentados a cada te
 
 ## Poções
 
+> As poções devem ser utilizadas no momento em que forem encontradas, ou devem ser descartadas. Não há possibilidade de armazena-las.
+
 ### Cura
 
 As poções de cura serão espalhadas pelo jogo conforme o personagem enfrentar oponentes. Ao final de cada batalha, o personagem terá uma chance de 50% de encontrar uma poção de cura. A poção de cura age no personagem de acordo com a sua vitalidade. Curando-o com 50% de seu valor.
@@ -164,3 +166,32 @@ A fórmula a seguir define o valor final de um ataque ou defesa:
 > f = força
 > vd = valor dos dados
 > ph = pontos de habilidade
+
+
+## Criaturas
+
+As criaturas do jogo são:
+
+* Humano
+* Mago
+* Elfo
+* Anão
+* Orc
+* Feiticeiro
+* Lorde das sombras
+
+
+> Cada criatura pode portar até 2 armas, uma para cada mão. E pode carregar até 3 poções.
+
+
+### Habilidades
+
+
+As habilidades são o fator que aumenta a capacidade de ataque ou defesa do jogador. Elas estão disponíveis apenas para as raças com as quais o jogador pode jogar, e são as seguintes:
+
+* Mago = Sabedoria => Favorece a defesa: 3x pontuação
+* Humano = Astúcia => Favorece o ataque: 2x pontuação
+* Elfo = Quatro elementos => Favorece o ataque: 3x pontuação
+* Anão = Forja => Favorece o ataque: 2x pontuação
+
+
