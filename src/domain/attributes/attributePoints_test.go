@@ -11,7 +11,7 @@ func createInternalErrorMessage(errorMessage string, t *testing.T) string {
 }
 
 func TestGet(t *testing.T) {
-	attributePoints, _ := NewBattleAttributes(45, 0)
+	attributePoints, _ := NewBattleAttributePoints(45, 0)
 	t.Run("Should return a value for an existing key", func(t *testing.T) {
 		var expected float64 = 45.0
 		got, _ := attributePoints.Get(ATTACK)
@@ -33,7 +33,7 @@ func TestGet(t *testing.T) {
 }
 
 func TestHas(t *testing.T) {
-	attributePoints, _ := NewBattleAttributes(50, 20)
+	attributePoints, _ := NewBattleAttributePoints(50, 20)
 
 	params := []struct {
 		should    string
@@ -63,7 +63,7 @@ func TestHas(t *testing.T) {
 }
 
 func TestIncrease(t *testing.T) {
-	attributePoints, _ := NewBattleAttributes(45, 62)
+	attributePoints, _ := NewBattleAttributePoints(45, 62)
 	t.Run("Should increase an attribute's value", func(t *testing.T) {
 		var expected float64 = 65.0
 		attributePoints.Increase(DEFENSE, 3)
@@ -94,7 +94,7 @@ func TestIncrease(t *testing.T) {
 }
 
 func TestDecrease(t *testing.T) {
-	attributePoints, _ := NewBattleAttributes(45, 62)
+	attributePoints, _ := NewBattleAttributePoints(45, 62)
 	t.Run("Should decrease an attribute's value", func(t *testing.T) {
 		var expected float64 = 55.0
 		attributePoints.Decrease(DEFENSE, -7)
