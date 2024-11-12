@@ -57,7 +57,7 @@ func New(
 	}, nil
 }
 
-func NewBattlePoints(attackPoints, defensePoints float64) (*AttributePoints, *errors.InternalError) {
+func NewBattleAttributes(attackPoints float64, defensePoints float64) (*AttributePoints, *errors.InternalError) {
 	if !utils.AreAllPositive(attackPoints, defensePoints) {
 		return nil, errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
 	}
@@ -66,6 +66,20 @@ func NewBattlePoints(attackPoints, defensePoints float64) (*AttributePoints, *er
 		points: map[Attribute]float64{
 			ATTACK:  attackPoints,
 			DEFENSE: defensePoints,
+		},
+	}, nil
+}
+
+func NewCreatureAttributes(health float64, intelligence float64, strength float64) (*AttributePoints, *errors.InternalError) {
+	if !utils.AreAllPositive(health, intelligence, strength) {
+		return nil, errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+	}
+
+	return &AttributePoints{
+		points: map[Attribute]float64{
+			HEALTH:       health,
+			INTELLIGENCE: intelligence,
+			STRENGTH:     strength,
 		},
 	}, nil
 }
