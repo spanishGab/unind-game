@@ -159,13 +159,13 @@ A fórmula a seguir define o valor final de uma ação de aumento de força:
 
 A fórmula a seguir define o valor final de um ataque ou defesa:
 
-`vf = f + vd * ph`
+`v = (fp + fa) * (pi/100)`
 
 > Onde:
-> vf = valor final de ataque/defesa
-> f = força
+> v = valor de ataque/defesa
+> fp = força do personagem
+> fa = força da arma
 > vd = valor dos dados
-> ph = pontos de habilidade
 
 
 ## Criaturas
