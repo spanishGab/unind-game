@@ -1,7 +1,6 @@
 package weapons
 
 import (
-	"spanishgab/unind/src/domain/attributes"
 	"spanishgab/unind/src/errors"
 )
 
@@ -18,9 +17,9 @@ const (
 )
 
 type Weapon struct {
-	name         string
-	type_        WeaponType
-	battlePoints attributes.AttributePoints
+	name       string
+	type_      WeaponType
+	attributes *WeaponAttributes
 }
 
 func New(
@@ -29,15 +28,15 @@ func New(
 	attackPoints float64,
 	defensePoints float64,
 ) (*Weapon, *errors.InternalError) {
-	battlePoints, err := attributes.NewBattlePoints(attackPoints, defensePoints)
+	battlePoints, err := NewWeaponAttributes(attackPoints, defensePoints)
 	if err != nil {
 		return nil, err
 	}
 
 	return &Weapon{
-		name:         name,
-		type_:        type_,
-		battlePoints: *battlePoints,
+		name:       name,
+		type_:      type_,
+		attributes: battlePoints,
 	}, nil
 }
 
@@ -102,4 +101,16 @@ func NewDagger(name string, attackPoints float64) (*Weapon, *errors.InternalErro
 		attackPoints,
 		0,
 	)
+}
+
+func (w *Weapon) GetName() string {
+	return w.name
+}
+
+func (w *Weapon) GetType() WeaponType {
+	return w.type_
+}
+
+func (w *Weapon) GetBattlePoints() *WeaponAttributes {
+	return w.attributes
 }
