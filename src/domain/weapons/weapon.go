@@ -114,3 +114,17 @@ func (w *Weapon) GetType() WeaponType {
 func (w *Weapon) GetBattlePoints() *WeaponAttributes {
 	return w.attributes
 }
+
+func GetAttackPower(w *Weapon) float64 {
+	if w == nil {
+		return 0
+	}
+	return w.GetBattlePoints().GetAttack()
+}
+
+func GetDefensePower(w *Weapon) float64 {
+	if w == nil {
+		return 0
+	}
+	return w.GetBattlePoints().GetDefense()
+}
