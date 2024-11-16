@@ -1,6 +1,7 @@
 package creatures
 
 import (
+	"math"
 	"spanishgab/unind/src/domain/weapons"
 )
 
@@ -41,14 +42,19 @@ func New(
 }
 
 func (c *Creature) Attack() float64 {
-	weaponsStrength := getWeaponAttackStrength(c.leftHand) + getWeaponAttackStrength(c.rightHand)
+	weaponsStrength := weapons.GetAttackPower(c.leftHand) + weapons.GetAttackPower(c.rightHand)
 
-	return (c.attributes.GetStrength() + weaponsStrength) * (c.attributes.GetIntelligence() / 100)
+	return c.getBattlePoints(weaponsStrength)
 }
 
-func getWeaponAttackStrength(w *weapons.Weapon) float64 {
-	if w == nil {
-		return 0
-	}
-	return w.GetBattlePoints().GetAttack()
+func (c *Creature) Defend() float64 {
+	weaponsStrength := weapons.GetDefensePower(c.leftHand) + weapons.GetDefensePower(c.rightHand)
+
+	return c.getBattlePoints(weaponsStrength)
+}
+
+func (c *Creature) getBattlePoints(weaponsStrength float64) float64 {
+	return math.Ceil(
+		(c.attributes.GetStrength() + weaponsStrength) * (c.attributes.GetIntelligence() / 100),
+	)
 }
