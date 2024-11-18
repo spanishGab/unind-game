@@ -2,7 +2,12 @@ package creatures
 
 import (
 	"math"
+	"spanishgab/unind/src/domain/potions"
 	"spanishgab/unind/src/domain/weapons"
+)
+
+const (
+	MAX_HEALTH_POINTS float64 = 100
 )
 
 type Race string
@@ -48,9 +53,18 @@ func (c *Creature) Attack() float64 {
 }
 
 func (c *Creature) Defend() float64 {
+	// TODO: re-implement Defend
 	weaponsStrength := weapons.GetDefensePower(c.leftHand) + weapons.GetDefensePower(c.rightHand)
 
 	return c.getBattlePoints(weaponsStrength)
+}
+
+func (c *Creature) Heal(potion *potions.Potion) {
+	if newHealth := c.attributes.health + float64(potion.GetUpgradePoints()); newHealth > MAX_HEALTH_POINTS {
+		c.attributes.health = MAX_HEALTH_POINTS
+	} else {
+		c.attributes.health = newHealth
+	}
 }
 
 func (c *Creature) getBattlePoints(weaponsStrength float64) float64 {
