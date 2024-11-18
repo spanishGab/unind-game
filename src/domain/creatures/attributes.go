@@ -38,3 +38,27 @@ func (cap *CreatureAttributes) GetHealth() float64 {
 func (cap *CreatureAttributes) GetIntelligence() float64 {
 	return cap.intelligence
 }
+
+func (cap *CreatureAttributes) SetStrength(points float64) error {
+	if !utils.AreAllPositive(points) {
+		return errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+	}
+	cap.strength = points
+	return nil
+}
+
+func (cap *CreatureAttributes) SetHealth(points float64) error {
+	if !utils.AreAllPositive(points) {
+		return errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+	}
+	cap.health = points
+	return nil
+}
+
+func (cap *CreatureAttributes) SetIntelligence(points float64) error {
+	if !utils.AreAllPositive(points) {
+		return errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+	}
+	cap.intelligence = points
+	return nil
+}
