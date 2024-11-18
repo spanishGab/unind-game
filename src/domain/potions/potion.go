@@ -22,7 +22,7 @@ type Potion struct {
 	upgradePoints uint
 }
 
-func New(name string, type_ PotionType, upgradePoints uint) (*Potion, *errors.InternalError) {
+func new(name string, type_ PotionType, upgradePoints uint) (*Potion, *errors.InternalError) {
 	if !utils.AreAllPositive(upgradePoints) {
 		return nil, errors.NewInternalError(INVALID_UPGRADE_VALUE)
 	}
@@ -34,7 +34,7 @@ func New(name string, type_ PotionType, upgradePoints uint) (*Potion, *errors.In
 }
 
 func NewCurePotion(name string, curePoints uint) (*Potion, *errors.InternalError) {
-	return New(
+	return new(
 		name,
 		CURE,
 		curePoints,
@@ -42,9 +42,21 @@ func NewCurePotion(name string, curePoints uint) (*Potion, *errors.InternalError
 }
 
 func NewStrengthPotion(name string, strengthPoints uint) (*Potion, *errors.InternalError) {
-	return New(
+	return new(
 		name,
 		STRENGTH,
 		strengthPoints,
 	)
+}
+
+func (p *Potion) GetName() string {
+	return p.name
+}
+
+func (p *Potion) GetType() PotionType {
+	return p.type_
+}
+
+func (p *Potion) GetUpgradePoints() uint {
+	return p.upgradePoints
 }
