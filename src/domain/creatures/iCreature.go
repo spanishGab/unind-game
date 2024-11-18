@@ -6,10 +6,10 @@ import (
 )
 
 type ICreature interface {
-	attack() float64
-	defend() float64
-	heal(potion potions.Potion)
-	strengthen(potion potions.Potion)
-	equipLeftHand(weapon weapons.Weapon)
-	equipRightHand(weapon weapons.Weapon)
+	Attack() float64
+	Defend()
+	Heal(potion potions.Potion)
+	Strengthen(potion potions.Potion)
+	EquipLeftHand(weapon weapons.Weapon)
+	EquipRightHand(weapon weapons.Weapon)
 }
