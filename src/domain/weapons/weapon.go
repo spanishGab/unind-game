@@ -22,7 +22,7 @@ type Weapon struct {
 	attributes *WeaponAttributes
 }
 
-func New(
+func new(
 	name string,
 	type_ WeaponType,
 	attackPoints float64,
@@ -41,7 +41,7 @@ func New(
 }
 
 func NewSword(name string, attackPoints float64, defensePoints float64) (*Weapon, *errors.InternalError) {
-	return New(
+	return new(
 		name,
 		SWORD,
 		attackPoints,
@@ -50,7 +50,7 @@ func NewSword(name string, attackPoints float64, defensePoints float64) (*Weapon
 }
 
 func NewShield(name string, defensePoints float64) (*Weapon, *errors.InternalError) {
-	return New(
+	return new(
 		name,
 		SHIELD,
 		0,
@@ -59,7 +59,7 @@ func NewShield(name string, defensePoints float64) (*Weapon, *errors.InternalErr
 }
 
 func NewBowAndArrow(name string, attackPoints float64) (*Weapon, *errors.InternalError) {
-	return New(
+	return new(
 		name,
 		BOW_AND_ARROW,
 		attackPoints,
@@ -68,7 +68,7 @@ func NewBowAndArrow(name string, attackPoints float64) (*Weapon, *errors.Interna
 }
 
 func NewAxe(name string, attackPoints float64) (*Weapon, *errors.InternalError) {
-	return New(
+	return new(
 		name,
 		AXE,
 		attackPoints,
@@ -77,7 +77,7 @@ func NewAxe(name string, attackPoints float64) (*Weapon, *errors.InternalError) 
 }
 
 func NewStaff(name string, attackPoints float64, defensePoints float64) (*Weapon, *errors.InternalError) {
-	return New(
+	return new(
 		name,
 		STAFF,
 		attackPoints,
@@ -86,7 +86,7 @@ func NewStaff(name string, attackPoints float64, defensePoints float64) (*Weapon
 }
 
 func NewWand(name string, attackPoints float64, defensePoints float64) (*Weapon, *errors.InternalError) {
-	return New(
+	return new(
 		name,
 		WAND,
 		attackPoints,
@@ -95,7 +95,7 @@ func NewWand(name string, attackPoints float64, defensePoints float64) (*Weapon,
 }
 
 func NewDagger(name string, attackPoints float64) (*Weapon, *errors.InternalError) {
-	return New(
+	return new(
 		name,
 		DAGGER,
 		attackPoints,
