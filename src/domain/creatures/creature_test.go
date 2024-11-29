@@ -3,6 +3,7 @@ package creatures
 import (
 	"spanishgab/unind/src/domain/potions"
 	"spanishgab/unind/src/domain/weapons"
+	"spanishgab/unind/src/errors"
 	"testing"
 )
 
@@ -12,7 +13,7 @@ func TestAttack(t *testing.T) {
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
 	elf := New(
 		"Legolas",
-		ELF,
+		Elf,
 		falameShot,
 		icyShot,
 		*attributePoints,
@@ -34,18 +35,33 @@ func TestDefend(t *testing.T) {
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
 	elf := New(
 		"Legolas",
-		ELF,
+		Elf,
 		woodenShield,
 		ironSword,
 		*attributePoints,
 	)
 
-	t.Run("Should return the defense points successfully", func(t *testing.T) {
-		var expected float64 = 68
-		got := elf.Defend()
+	t.Run("Should reduce the health points when the attack received is grater thant the defense points", func(t *testing.T) {
+		var expected float64 = 88
+		var attack float64 = 70
+		elf.Defend(attack)
 
-		if got != expected {
-			t.Errorf("expected: %f, got: %f", expected, got)
+		if elf.attributes.GetHealth() != expected {
+			t.Errorf("expected: %f, got: %f", expected, elf.attributes.GetHealth())
+		}
+	})
+
+	t.Run("Should reduce the creature's health to zero and return a DomainError", func(t *testing.T) {
+		var expectedHealth float64 = 0
+		var expectedError *errors.DomainError = CreatureDiedError
+		var attack float64 = 200
+		err := elf.Defend(attack)
+
+		if elf.attributes.GetHealth() != expectedHealth {
+			t.Errorf("expected: %f, got: %f", expectedHealth, elf.attributes.GetHealth())
+		}
+		if !err.Is(expectedError) {
+			t.Errorf("expected: %v, got: %v", expectedError, err)
 		}
 	})
 }
@@ -55,7 +71,7 @@ func TestHeal(t *testing.T) {
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
 	dwarf := New(
 		"Gimli",
-		DWARF,
+		Dwarf,
 		nil,
 		ironAxe,
 		*attributePoints,
@@ -65,11 +81,11 @@ func TestHeal(t *testing.T) {
 		t.Cleanup(func() { dwarf.attributes.SetHealth(90) })
 
 		healingPotion, _ := potions.NewCurePotion("Healing potion", 50)
-		var expected float64 = MAX_HEALTH_POINTS
+		var expected float64 = MaxHealthPoints
 		dwarf.Heal(healingPotion)
 
-		if dwarf.attributes.health != expected {
-			t.Errorf("expected: %f, got: %f", expected, dwarf.attributes.health)
+		if dwarf.attributes.GetHealth() != expected {
+			t.Errorf("expected: %f, got: %f", expected, dwarf.attributes.GetHealth())
 		}
 	})
 	t.Run("Should heal the creature based on the potion curing points", func(t *testing.T) {
@@ -79,8 +95,8 @@ func TestHeal(t *testing.T) {
 		var expected float64 = 95
 		dwarf.Heal(healingPotion)
 
-		if dwarf.attributes.health != expected {
-			t.Errorf("expected: %f, got: %f", expected, dwarf.attributes.health)
+		if dwarf.attributes.GetHealth() != expected {
+			t.Errorf("expected: %f, got: %f", expected, dwarf.attributes.GetHealth())
 		}
 	})
 }
@@ -91,7 +107,7 @@ func TestGetBattlePoints(t *testing.T) {
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
 	elf := New(
 		"Legolas",
-		ELF,
+		Elf,
 		woodenShield,
 		ironSword,
 		*attributePoints,

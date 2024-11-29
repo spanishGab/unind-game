@@ -4,22 +4,23 @@ import (
 	"math"
 	"spanishgab/unind/src/domain/potions"
 	"spanishgab/unind/src/domain/weapons"
+	"spanishgab/unind/src/errors"
 )
 
 const (
-	MAX_HEALTH_POINTS float64 = 100
+	MaxHealthPoints float64 = 100
 )
 
 type Race string
 
 const (
-	HUMAN       Race = "human"
-	WIZARD      Race = "wizard"
-	ELF         Race = "elf"
-	DWARF       Race = "dwarf"
-	ORC         Race = "orc"
-	SORCERER    Race = "sorcerer"
-	SHADOW_LORD Race = "shadow-lord"
+	Human      Race = "human"
+	Wizard     Race = "wizard"
+	Elf        Race = "elf"
+	Dwarf      Race = "dwarf"
+	Orc        Race = "orc"
+	Sorcerer   Race = "sorcerer"
+	ShadowLord Race = "shadow-lord"
 )
 
 type Creature struct {
@@ -52,18 +53,23 @@ func (c *Creature) Attack() float64 {
 	return c.getBattlePoints(weaponsStrength)
 }
 
-func (c *Creature) Defend() float64 {
-	// TODO: re-implement Defend
+func (c *Creature) Defend(attack float64) *errors.DomainError {
 	weaponsStrength := weapons.GetDefensePower(c.leftHand) + weapons.GetDefensePower(c.rightHand)
 
-	return c.getBattlePoints(weaponsStrength)
+	if defense := c.getBattlePoints(weaponsStrength) - attack; defense < 0 {
+		err := c.attributes.SetHealth(c.attributes.GetHealth() + defense)
+		if err != nil {
+			return CreatureDiedError
+		}
+	}
+	return nil
 }
 
 func (c *Creature) Heal(potion *potions.Potion) {
-	if newHealth := c.attributes.health + float64(potion.GetUpgradePoints()); newHealth > MAX_HEALTH_POINTS {
-		c.attributes.health = MAX_HEALTH_POINTS
+	if newHealth := c.attributes.health + float64(potion.GetUpgradePoints()); newHealth > MaxHealthPoints {
+		c.attributes.SetHealth(MaxHealthPoints)
 	} else {
-		c.attributes.health = newHealth
+		c.attributes.SetHealth(newHealth)
 	}
 }
 

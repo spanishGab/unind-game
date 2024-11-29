@@ -1,7 +1,7 @@
 package errors
 
 import (
-	"fmt"
+	"errors"
 )
 
 type InternalError struct {
@@ -11,8 +11,8 @@ type InternalError struct {
 func NewInternalError(message string) *InternalError {
 	internalError := &InternalError{
 		CustomError: CustomError{
-			Code: "internal-error",
-			error: fmt.Errorf(message),
+			Code:  "internal-error",
+			error: errors.New(message),
 		},
 	}
 	return internalError

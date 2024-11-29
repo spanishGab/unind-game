@@ -5,10 +5,6 @@ import (
 	"spanishgab/unind/src/utils"
 )
 
-const (
-	INVALID_ATTRIBUTE_VALUE string = "attribute values must be greater than zero"
-)
-
 type CreatureAttributes struct {
 	strength     float64
 	health       float64
@@ -17,7 +13,7 @@ type CreatureAttributes struct {
 
 func NewCreatureAttributes(health float64, intelligence float64, strength float64) (*CreatureAttributes, *errors.InternalError) {
 	if !utils.AreAllPositive(health, intelligence, strength) {
-		return nil, errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+		return nil, InvalidAttributeValueError
 	}
 
 	return &CreatureAttributes{
@@ -27,38 +23,39 @@ func NewCreatureAttributes(health float64, intelligence float64, strength float6
 	}, nil
 }
 
-func (cap *CreatureAttributes) GetStrength() float64 {
-	return cap.strength
+func (ca *CreatureAttributes) GetStrength() float64 {
+	return ca.strength
 }
 
-func (cap *CreatureAttributes) GetHealth() float64 {
-	return cap.health
+func (ca *CreatureAttributes) GetHealth() float64 {
+	return ca.health
 }
 
-func (cap *CreatureAttributes) GetIntelligence() float64 {
-	return cap.intelligence
+func (ca *CreatureAttributes) GetIntelligence() float64 {
+	return ca.intelligence
 }
 
-func (cap *CreatureAttributes) SetStrength(points float64) error {
+func (ca *CreatureAttributes) SetStrength(points float64) *errors.InternalError {
 	if !utils.AreAllPositive(points) {
-		return errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+		return InvalidAttributeValueError
 	}
-	cap.strength = points
+	ca.strength = points
 	return nil
 }
 
-func (cap *CreatureAttributes) SetHealth(points float64) error {
+func (ca *CreatureAttributes) SetHealth(points float64) *errors.InternalError {
 	if !utils.AreAllPositive(points) {
-		return errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+		ca.health = 0
+		return InvalidAttributeValueError
 	}
-	cap.health = points
+	ca.health = points
 	return nil
 }
 
-func (cap *CreatureAttributes) SetIntelligence(points float64) error {
+func (ca *CreatureAttributes) SetIntelligence(points float64) *errors.InternalError {
 	if !utils.AreAllPositive(points) {
-		return errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+		return InvalidAttributeValueError
 	}
-	cap.intelligence = points
+	ca.intelligence = points
 	return nil
 }
