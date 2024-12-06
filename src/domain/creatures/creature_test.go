@@ -1,6 +1,7 @@
 package creatures
 
 import (
+	"fmt"
 	"spanishgab/unind/src/domain/potions"
 	"spanishgab/unind/src/domain/weapons"
 	"spanishgab/unind/src/errors"
@@ -11,7 +12,7 @@ func TestAttack(t *testing.T) {
 	falameShot, _ := weapons.NewDagger("Flame shot", 7)
 	icyShot, _ := weapons.NewDagger("Icy shot", 6)
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
-	elf := New(
+	elf := new(
 		"Legolas",
 		Elf,
 		falameShot,
@@ -33,7 +34,7 @@ func TestDefend(t *testing.T) {
 	woodenShield, _ := weapons.NewShield("Wooden shield", 10)
 	ironSword, _ := weapons.NewSword("Iron sword", 8, 2)
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
-	elf := New(
+	elf := new(
 		"Legolas",
 		Elf,
 		woodenShield,
@@ -67,9 +68,12 @@ func TestDefend(t *testing.T) {
 }
 
 func TestHeal(t *testing.T) {
+	healingPotion50Points, _ := potions.NewCurePotion("Healing potion", 50)
+	healingPotion5Points, _ := potions.NewCurePotion("Healing potion", 5)
+
 	ironAxe, _ := weapons.NewAxe("Iron axe", 9)
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
-	dwarf := New(
+	dwarf := new(
 		"Gimli",
 		Dwarf,
 		nil,
@@ -77,35 +81,40 @@ func TestHeal(t *testing.T) {
 		*attributePoints,
 	)
 
-	t.Run("Should upgrade the creature health points unitl it hits the maximum health points allowed", func(t *testing.T) {
-		t.Cleanup(func() { dwarf.attributes.SetHealth(90) })
+	params := []struct {
+		should   string
+		potion   *potions.Potion
+		expected float64
+	}{
+		{
+			should:   "Should upgrade the creature health points unitl it hits the maximum health points allowed",
+			potion:   healingPotion50Points,
+			expected: MaxHealthPoints,
+		},
+		{
+			should:   "Should heal the creature based on the potion's curing points",
+			potion:   healingPotion5Points,
+			expected: 95,
+		},
+	}
+	for _, param := range params {
+		t.Run(fmt.Sprintf("Should %s", param.should), func(t *testing.T) {
+			t.Cleanup(func() { dwarf.attributes.SetHealth(90) })
 
-		healingPotion, _ := potions.NewCurePotion("Healing potion", 50)
-		var expected float64 = MaxHealthPoints
-		dwarf.Heal(healingPotion)
+			dwarf.Heal(param.potion)
 
-		if dwarf.attributes.GetHealth() != expected {
-			t.Errorf("expected: %f, got: %f", expected, dwarf.attributes.GetHealth())
-		}
-	})
-	t.Run("Should heal the creature based on the potion curing points", func(t *testing.T) {
-		t.Cleanup(func() { dwarf.attributes.SetHealth(90) })
-
-		healingPotion, _ := potions.NewCurePotion("Healing potion", 5)
-		var expected float64 = 95
-		dwarf.Heal(healingPotion)
-
-		if dwarf.attributes.GetHealth() != expected {
-			t.Errorf("expected: %f, got: %f", expected, dwarf.attributes.GetHealth())
-		}
-	})
+			if dwarf.attributes.GetHealth() != param.expected {
+				t.Errorf("expected: %f, got: %f", param.expected, dwarf.attributes.GetHealth())
+			}
+		})
+	}
 }
 
 func TestGetBattlePoints(t *testing.T) {
 	woodenShield, _ := weapons.NewShield("Wooden shield", 10)
 	ironSword, _ := weapons.NewSword("Iron sword", 8, 2)
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
-	elf := New(
+	elf := new(
 		"Legolas",
 		Elf,
 		woodenShield,
@@ -121,4 +130,40 @@ func TestGetBattlePoints(t *testing.T) {
 			t.Errorf("expected: %f, got: %f", expected, got)
 		}
 	})
+}
+
+func TestStrengthen(t *testing.T) {
+	woodenStaff, _ := weapons.NewStaff("Wooden staff", 15, 15)
+	attributePoints, _ := NewCreatureAttributes(90, 100, 80)
+	wizard := new("Gandalf", Wizard, woodenStaff, nil, *attributePoints)
+	strengthenPotion19Points, _ := potions.NewStrengthPotion("Young warrior potion", 19)
+	strengthenPotion21Points, _ := potions.NewStrengthPotion("Young warrior potion", 21)
+
+	params := []struct {
+		should   string
+		potion   *potions.Potion
+		expected float64
+	}{
+		{
+			should:   "Should upgrade the creature strenght points unitl it hits the maximum strength points allowed",
+			potion:   strengthenPotion21Points,
+			expected: MaxStrengthPoints,
+		},
+		{
+			should:   "Should strengthen the creature according to the potion's strength points",
+			potion:   strengthenPotion19Points,
+			expected: 99,
+		},
+	}
+	for _, param := range params {
+		t.Run(fmt.Sprintf("Should %s", param.should), func(t *testing.T) {
+			t.Cleanup(func() { wizard.attributes.SetStrength(80) })
+
+			wizard.Strengthen(param.potion)
+
+			if wizard.attributes.GetStrength() != param.expected {
+				t.Errorf("expected: %f, got: %f", param.expected, wizard.attributes.GetStrength())
+			}
+		})
+	}
 }
