@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	MaxHealthPoints float64 = 100
+	MaxHealthPoints   float64 = 100
+	MaxStrengthPoints float64 = 100
 )
 
 type Race string
@@ -31,7 +32,7 @@ type Creature struct {
 	attributes *CreatureAttributes
 }
 
-func New(
+func new(
 	name string,
 	race Race,
 	leftHand *weapons.Weapon,
@@ -46,6 +47,8 @@ func New(
 		attributes: &attributes,
 	}
 }
+
+func NewHuman(name string)
 
 func (c *Creature) Attack() float64 {
 	weaponsStrength := weapons.GetAttackPower(c.leftHand) + weapons.GetAttackPower(c.rightHand)
@@ -66,11 +69,27 @@ func (c *Creature) Defend(attack float64) *errors.DomainError {
 }
 
 func (c *Creature) Heal(potion *potions.Potion) {
-	if newHealth := c.attributes.health + float64(potion.GetUpgradePoints()); newHealth > MaxHealthPoints {
+	if newHealth := c.attributes.GetHealth() + float64(potion.GetUpgradePoints()); newHealth > MaxHealthPoints {
 		c.attributes.SetHealth(MaxHealthPoints)
 	} else {
 		c.attributes.SetHealth(newHealth)
 	}
+}
+
+func (c *Creature) Strengthen(potion *potions.Potion) {
+	if newStrength := c.attributes.GetStrength() + float64(potion.GetUpgradePoints()); newStrength > MaxStrengthPoints {
+		c.attributes.SetStrength(MaxStrengthPoints)
+	} else {
+		c.attributes.SetStrength(newStrength)
+	}
+}
+
+func (c *Creature) EquipRightHand(weapon *weapons.Weapon) {
+	c.rightHand = weapon
+}
+
+func (c *Creature) EquipLeftHand(weapon *weapons.Weapon) {
+	c.leftHand = weapon
 }
 
 func (c *Creature) getBattlePoints(weaponsStrength float64) float64 {
