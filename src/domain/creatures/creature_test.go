@@ -12,7 +12,7 @@ func TestAttack(t *testing.T) {
 	falameShot, _ := weapons.NewDagger("Flame shot", 7)
 	icyShot, _ := weapons.NewDagger("Icy shot", 6)
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
-	elf := new(
+	elf := NewCreature(
 		"Legolas",
 		Elf,
 		falameShot,
@@ -34,7 +34,7 @@ func TestDefend(t *testing.T) {
 	woodenShield, _ := weapons.NewShield("Wooden shield", 10)
 	ironSword, _ := weapons.NewSword("Iron sword", 8, 2)
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
-	elf := new(
+	elf := NewCreature(
 		"Legolas",
 		Elf,
 		woodenShield,
@@ -73,7 +73,7 @@ func TestHeal(t *testing.T) {
 
 	ironAxe, _ := weapons.NewAxe("Iron axe", 9)
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
-	dwarf := new(
+	dwarf := NewCreature(
 		"Gimli",
 		Dwarf,
 		nil,
@@ -114,7 +114,7 @@ func TestGetBattlePoints(t *testing.T) {
 	woodenShield, _ := weapons.NewShield("Wooden shield", 10)
 	ironSword, _ := weapons.NewSword("Iron sword", 8, 2)
 	attributePoints, _ := NewCreatureAttributes(90, 70, 85)
-	elf := new(
+	elf := NewCreature(
 		"Legolas",
 		Elf,
 		woodenShield,
@@ -135,7 +135,7 @@ func TestGetBattlePoints(t *testing.T) {
 func TestStrengthen(t *testing.T) {
 	woodenStaff, _ := weapons.NewStaff("Wooden staff", 15, 15)
 	attributePoints, _ := NewCreatureAttributes(90, 100, 80)
-	wizard := new("Gandalf", Wizard, woodenStaff, nil, *attributePoints)
+	wizard := NewCreature("Gandalf", Wizard, woodenStaff, nil, *attributePoints)
 	strengthenPotion19Points, _ := potions.NewStrengthPotion("Young warrior potion", 19)
 	strengthenPotion21Points, _ := potions.NewStrengthPotion("Young warrior potion", 21)
 

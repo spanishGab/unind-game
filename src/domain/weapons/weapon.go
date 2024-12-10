@@ -7,13 +7,13 @@ import (
 type WeaponType string
 
 const (
-	SWORD         WeaponType = "sword"
-	SHIELD        WeaponType = "shield"
-	BOW_AND_ARROW WeaponType = "bow and arrow"
-	AXE           WeaponType = "axe"
-	STAFF         WeaponType = "staff"
-	WAND          WeaponType = "wand"
-	DAGGER        WeaponType = "dagger"
+	Sword       WeaponType = "sword"
+	Shield      WeaponType = "shield"
+	BowAndArrow WeaponType = "bow and arrow"
+	Axe         WeaponType = "axe"
+	Staff       WeaponType = "staff"
+	Wand        WeaponType = "wand"
+	Dagger      WeaponType = "dagger"
 )
 
 type Weapon struct {
@@ -22,7 +22,7 @@ type Weapon struct {
 	attributes *WeaponAttributes
 }
 
-func new(
+func NewWeapon(
 	name string,
 	type_ WeaponType,
 	attackPoints float64,
@@ -38,69 +38,6 @@ func new(
 		type_:      type_,
 		attributes: battlePoints,
 	}, nil
-}
-
-func NewSword(name string, attackPoints float64, defensePoints float64) (*Weapon, *errors.InternalError) {
-	return new(
-		name,
-		SWORD,
-		attackPoints,
-		defensePoints,
-	)
-}
-
-func NewShield(name string, defensePoints float64) (*Weapon, *errors.InternalError) {
-	return new(
-		name,
-		SHIELD,
-		0,
-		defensePoints,
-	)
-}
-
-func NewBowAndArrow(name string, attackPoints float64) (*Weapon, *errors.InternalError) {
-	return new(
-		name,
-		BOW_AND_ARROW,
-		attackPoints,
-		0,
-	)
-}
-
-func NewAxe(name string, attackPoints float64) (*Weapon, *errors.InternalError) {
-	return new(
-		name,
-		AXE,
-		attackPoints,
-		0,
-	)
-}
-
-func NewStaff(name string, attackPoints float64, defensePoints float64) (*Weapon, *errors.InternalError) {
-	return new(
-		name,
-		STAFF,
-		attackPoints,
-		defensePoints,
-	)
-}
-
-func NewWand(name string, attackPoints float64, defensePoints float64) (*Weapon, *errors.InternalError) {
-	return new(
-		name,
-		WAND,
-		attackPoints,
-		defensePoints,
-	)
-}
-
-func NewDagger(name string, attackPoints float64) (*Weapon, *errors.InternalError) {
-	return new(
-		name,
-		DAGGER,
-		attackPoints,
-		0,
-	)
 }
 
 func (w *Weapon) GetName() string {

@@ -184,14 +184,4 @@ As criaturas do jogo são:
 > Cada criatura pode portar até 2 armas, uma para cada mão. E pode carregar até 3 poções.
 
 
-### Habilidades
-
-
-As habilidades são o fator que aumenta a capacidade de ataque ou defesa do jogador. Elas estão disponíveis apenas para as raças com as quais o jogador pode jogar, e são as seguintes:
-
-* Mago = Sabedoria => Favorece a defesa: 3x pontuação
-* Humano = Astúcia => Favorece o ataque: 2x pontuação
-* Elfo = Quatro elementos => Favorece o ataque: 3x pontuação
-* Anão = Forja => Favorece o ataque: 2x pontuação
-
 

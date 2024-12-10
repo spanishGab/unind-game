@@ -32,7 +32,7 @@ type Creature struct {
 	attributes *CreatureAttributes
 }
 
-func new(
+func NewCreature(
 	name string,
 	race Race,
 	leftHand *weapons.Weapon,
@@ -47,8 +47,6 @@ func new(
 		attributes: &attributes,
 	}
 }
-
-func NewHuman(name string)
 
 func (c *Creature) Attack() float64 {
 	weaponsStrength := weapons.GetAttackPower(c.leftHand) + weapons.GetAttackPower(c.rightHand)
