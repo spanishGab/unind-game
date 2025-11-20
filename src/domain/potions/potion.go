@@ -33,14 +33,14 @@ func NewPotion(name string, type_ PotionType, upgradePoints uint) (*Potion, *err
 	}, nil
 }
 
-func (p *Potion) GetName() string {
+func (p *Potion) Name() string {
 	return p.name
 }
 
-func (p *Potion) GetType() PotionType {
+func (p *Potion) Type() PotionType {
 	return p.type_
 }
 
-func (p *Potion) GetUpgradePoints() uint {
+func (p *Potion) UpgradePoints() uint {
 	return p.upgradePoints
 }

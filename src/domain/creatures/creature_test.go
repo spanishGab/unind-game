@@ -52,7 +52,7 @@ func TestDefend(t *testing.T) {
 		}
 	})
 
-	t.Run("Should reduce the creature's health to zero and return a DomainError", func(t *testing.T) {
+	t.Run("Should reduce the creature's health to zero and return a CreatureDiedError when the creature's health becomes to zero", func(t *testing.T) {
 		var expectedHealth float64 = 0
 		var expectedError *errors.DomainError = CreatureDiedError
 		var attack float64 = 200

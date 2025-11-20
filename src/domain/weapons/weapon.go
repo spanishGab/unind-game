@@ -40,28 +40,28 @@ func NewWeapon(
 	}, nil
 }
 
-func (w *Weapon) GetName() string {
+func (w *Weapon) Name() string {
 	return w.name
 }
 
-func (w *Weapon) GetType() WeaponType {
+func (w *Weapon) Type() WeaponType {
 	return w.type_
 }
 
-func (w *Weapon) GetBattlePoints() *WeaponAttributes {
+func (w *Weapon) Attributes() *WeaponAttributes {
 	return w.attributes
 }
 
-func GetAttackPower(w *Weapon) float64 {
+func AttackPower(w *Weapon) float64 {
 	if w == nil {
 		return 0
 	}
-	return w.GetBattlePoints().GetAttack()
+	return w.Attributes().Attack()
 }
 
-func GetDefensePower(w *Weapon) float64 {
+func DefensePower(w *Weapon) float64 {
 	if w == nil {
 		return 0
 	}
-	return w.GetBattlePoints().GetDefense()
+	return w.Attributes().Defense()
 }

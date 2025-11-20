@@ -49,13 +49,13 @@ func NewCreature(
 }
 
 func (c *Creature) Attack() float64 {
-	weaponsStrength := weapons.GetAttackPower(c.leftHand) + weapons.GetAttackPower(c.rightHand)
+	weaponsStrength := weapons.AttackPower(c.leftHand) + weapons.AttackPower(c.rightHand)
 
 	return c.getBattlePoints(weaponsStrength)
 }
 
 func (c *Creature) Defend(attack float64) *errors.DomainError {
-	weaponsStrength := weapons.GetDefensePower(c.leftHand) + weapons.GetDefensePower(c.rightHand)
+	weaponsStrength := weapons.DefensePower(c.leftHand) + weapons.DefensePower(c.rightHand)
 
 	if defense := c.getBattlePoints(weaponsStrength) - attack; defense < 0 {
 		err := c.attributes.SetHealth(c.attributes.GetHealth() + defense)
@@ -67,7 +67,7 @@ func (c *Creature) Defend(attack float64) *errors.DomainError {
 }
 
 func (c *Creature) Heal(potion *potions.Potion) {
-	if newHealth := c.attributes.GetHealth() + float64(potion.GetUpgradePoints()); newHealth > MaxHealthPoints {
+	if newHealth := c.attributes.GetHealth() + float64(potion.UpgradePoints()); newHealth > MaxHealthPoints {
 		c.attributes.SetHealth(MaxHealthPoints)
 	} else {
 		c.attributes.SetHealth(newHealth)
@@ -75,7 +75,7 @@ func (c *Creature) Heal(potion *potions.Potion) {
 }
 
 func (c *Creature) Strengthen(potion *potions.Potion) {
-	if newStrength := c.attributes.GetStrength() + float64(potion.GetUpgradePoints()); newStrength > MaxStrengthPoints {
+	if newStrength := c.attributes.GetStrength() + float64(potion.UpgradePoints()); newStrength > MaxStrengthPoints {
 		c.attributes.SetStrength(MaxStrengthPoints)
 	} else {
 		c.attributes.SetStrength(newStrength)

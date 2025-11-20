@@ -25,10 +25,10 @@ func NewWeaponAttributes(attackPoints float64, defensePoints float64) (*WeaponAt
 	}, nil
 }
 
-func (bap *WeaponAttributes) GetAttack() float64 {
+func (bap *WeaponAttributes) Attack() float64 {
 	return bap.attack
 }
 
-func (bap *WeaponAttributes) GetDefense() float64 {
+func (bap *WeaponAttributes) Defense() float64 {
 	return bap.defense
 }

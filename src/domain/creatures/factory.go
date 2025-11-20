@@ -11,10 +11,10 @@ func NewHuman(
 	shield *weapons.Weapon,
 	attributes CreatureAttributes,
 ) (*Creature, *errors.InternalError) {
-	if sword.GetType() != weapons.Sword {
+	if sword.Type() != weapons.Sword {
 		return nil, MismatchedWeaponTypeError
 	}
-	if shield.GetType() != weapons.Shield {
+	if shield.Type() != weapons.Shield {
 		return nil, MismatchedWeaponTypeError
 	}
 	return NewCreature(name, Human, sword, shield, attributes), nil
@@ -26,10 +26,10 @@ func NewWizard(
 	sword *weapons.Weapon,
 	attributes CreatureAttributes,
 ) (*Creature, *errors.InternalError) {
-	if staff.GetType() != weapons.Staff {
+	if staff.Type() != weapons.Staff {
 		return nil, MismatchedWeaponTypeError
 	}
-	if sword.GetType() != weapons.Sword {
+	if sword.Type() != weapons.Sword {
 		return nil, MismatchedWeaponTypeError
 	}
 	return NewCreature(name, Wizard, staff, sword, attributes), nil
@@ -40,7 +40,7 @@ func NewElf(
 	bowAndArrow *weapons.Weapon,
 	attributes CreatureAttributes,
 ) (*Creature, *errors.InternalError) {
-	if bowAndArrow.GetType() != weapons.BowAndArrow {
+	if bowAndArrow.Type() != weapons.BowAndArrow {
 		return nil, MismatchedWeaponTypeError
 	}
 	return NewCreature(name, Elf, bowAndArrow, nil, attributes), nil
@@ -51,7 +51,7 @@ func NewDwarf(
 	axe *weapons.Weapon,
 	attributes CreatureAttributes,
 ) (*Creature, *errors.InternalError) {
-	if axe.GetType() != weapons.Axe {
+	if axe.Type() != weapons.Axe {
 		return nil, MismatchedWeaponTypeError
 	}
 	return NewCreature(name, Dwarf, axe, nil, attributes), nil
@@ -63,10 +63,10 @@ func NewOrc(
 	shield *weapons.Weapon,
 	attributes CreatureAttributes,
 ) (*Creature, *errors.InternalError) {
-	if sword.GetType() != weapons.Sword {
+	if sword.Type() != weapons.Sword {
 		return nil, MismatchedWeaponTypeError
 	}
-	if shield.GetType() != weapons.Shield {
+	if shield.Type() != weapons.Shield {
 		return nil, MismatchedWeaponTypeError
 	}
 	return NewCreature(name, Orc, sword, shield, attributes), nil
@@ -77,7 +77,7 @@ func NewSorcerer(
 	wand *weapons.Weapon,
 	attributes CreatureAttributes,
 ) (*Creature, *errors.InternalError) {
-	if wand.GetType() != weapons.Wand {
+	if wand.Type() != weapons.Wand {
 		return nil, MismatchedWeaponTypeError
 	}
 	return NewCreature(name, Orc, wand, nil, attributes), nil
@@ -89,10 +89,10 @@ func NewShadowLord(
 	sword *weapons.Weapon,
 	attributes CreatureAttributes,
 ) (*Creature, *errors.InternalError) {
-	if staff.GetType() != weapons.Staff {
+	if staff.Type() != weapons.Staff {
 		return nil, MismatchedWeaponTypeError
 	}
-	if sword.GetType() != weapons.Sword {
+	if sword.Type() != weapons.Sword {
 		return nil, MismatchedWeaponTypeError
 	}
 	return NewCreature(name, Orc, staff, sword, attributes), nil

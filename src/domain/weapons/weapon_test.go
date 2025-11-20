@@ -7,7 +7,7 @@ func TestGetAttackPower(t *testing.T) {
 		ironSword, _ := NewSword("Iron sword", 8, 2)
 
 		var expected float64 = 8
-		got := GetAttackPower(ironSword)
+		got := AttackPower(ironSword)
 
 		if got != expected {
 			t.Errorf("expected: %f, got: %f", expected, got)
@@ -18,7 +18,7 @@ func TestGetAttackPower(t *testing.T) {
 		woodenShield, _ := NewShield("Wooden shield", 10)
 
 		var expected float64 = 0
-		got := GetAttackPower(woodenShield)
+		got := AttackPower(woodenShield)
 
 		if got != expected {
 			t.Errorf("expected: %f, got: %f", expected, got)
@@ -31,7 +31,7 @@ func TestGetDefensePower(t *testing.T) {
 		woodenShield, _ := NewShield("Wooden shield", 10)
 
 		var expected float64 = 10
-		got := GetDefensePower(woodenShield)
+		got := DefensePower(woodenShield)
 
 		if got != expected {
 			t.Errorf("expected: %f, got: %f", expected, got)
@@ -42,7 +42,7 @@ func TestGetDefensePower(t *testing.T) {
 		falameShot, _ := NewDagger("Flame shot", 7)
 
 		var expected float64 = 0
-		got := GetDefensePower(falameShot)
+		got := DefensePower(falameShot)
 
 		if got != expected {
 			t.Errorf("expected: %f, got: %f", expected, got)
