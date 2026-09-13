@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	INVALID_ATTRIBUTE_VALUE string = "attribute values must be greater than zero"
+	InvalidAttributeValue string = "attribute values must be greater than zero"
 )
 
 type WeaponAttributes struct {
@@ -16,7 +16,7 @@ type WeaponAttributes struct {
 
 func NewWeaponAttributes(attackPoints float64, defensePoints float64) (*WeaponAttributes, *errors.InternalError) {
 	if !utils.AreAllPositive(attackPoints, defensePoints) {
-		return nil, errors.NewInternalError(INVALID_ATTRIBUTE_VALUE)
+		return nil, errors.NewInternalError(InvalidAttributeValue)
 	}
 
 	return &WeaponAttributes{

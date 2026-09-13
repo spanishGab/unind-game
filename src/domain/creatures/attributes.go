@@ -23,15 +23,15 @@ func NewCreatureAttributes(health float64, intelligence float64, strength float6
 	}, nil
 }
 
-func (ca *CreatureAttributes) GetStrength() float64 {
+func (ca *CreatureAttributes) Strength() float64 {
 	return ca.strength
 }
 
-func (ca *CreatureAttributes) GetHealth() float64 {
+func (ca *CreatureAttributes) Health() float64 {
 	return ca.health
 }
 
-func (ca *CreatureAttributes) GetIntelligence() float64 {
+func (ca *CreatureAttributes) Intelligence() float64 {
 	return ca.intelligence
 }
 

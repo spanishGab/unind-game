@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	INVALID_UPGRADE_VALUE string = "the upgrade value must be greater than zero"
+	InvalidUpgradeValue string = "the upgrade value must be greater than zero"
 )
 
 type PotionType string
@@ -24,7 +24,7 @@ type Potion struct {
 
 func NewPotion(name string, type_ PotionType, upgradePoints uint) (*Potion, *errors.InternalError) {
 	if !utils.AreAllPositive(upgradePoints) {
-		return nil, errors.NewInternalError(INVALID_UPGRADE_VALUE)
+		return nil, errors.NewInternalError(InvalidUpgradeValue)
 	}
 	return &Potion{
 		name:          name,

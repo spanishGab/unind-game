@@ -24,6 +24,15 @@ const (
 	ShadowLord Race = "shadow-lord"
 )
 
+type ICreature interface {
+	Attack() float64
+	Defend(attack float64) *errors.DomainError
+	Heal(potion *potions.Potion)
+	Strengthen(potion *potions.Potion)
+	EquipLeftHand(weapon *weapons.Weapon)
+	EquipRightHand(weapon *weapons.Weapon)
+}
+
 type Creature struct {
 	name       string
 	race       Race
@@ -58,7 +67,7 @@ func (c *Creature) Defend(attack float64) *errors.DomainError {
 	weaponsStrength := weapons.DefensePower(c.leftHand) + weapons.DefensePower(c.rightHand)
 
 	if defense := c.getBattlePoints(weaponsStrength) - attack; defense < 0 {
-		err := c.attributes.SetHealth(c.attributes.GetHealth() + defense)
+		err := c.attributes.SetHealth(c.attributes.Health() + defense)
 		if err != nil {
 			return CreatureDiedError
 		}
@@ -67,7 +76,7 @@ func (c *Creature) Defend(attack float64) *errors.DomainError {
 }
 
 func (c *Creature) Heal(potion *potions.Potion) {
-	if newHealth := c.attributes.GetHealth() + float64(potion.UpgradePoints()); newHealth > MaxHealthPoints {
+	if newHealth := c.attributes.Health() + float64(potion.UpgradePoints()); newHealth > MaxHealthPoints {
 		c.attributes.SetHealth(MaxHealthPoints)
 	} else {
 		c.attributes.SetHealth(newHealth)
@@ -75,7 +84,7 @@ func (c *Creature) Heal(potion *potions.Potion) {
 }
 
 func (c *Creature) Strengthen(potion *potions.Potion) {
-	if newStrength := c.attributes.GetStrength() + float64(potion.UpgradePoints()); newStrength > MaxStrengthPoints {
+	if newStrength := c.attributes.Strength() + float64(potion.UpgradePoints()); newStrength > MaxStrengthPoints {
 		c.attributes.SetStrength(MaxStrengthPoints)
 	} else {
 		c.attributes.SetStrength(newStrength)
@@ -92,6 +101,6 @@ func (c *Creature) EquipLeftHand(weapon *weapons.Weapon) {
 
 func (c *Creature) getBattlePoints(weaponsStrength float64) float64 {
 	return math.Ceil(
-		(c.attributes.GetStrength() + weaponsStrength) * (c.attributes.GetIntelligence() / 100),
+		(c.attributes.Strength() + weaponsStrength) * (c.attributes.Intelligence() / 100),
 	)
 }

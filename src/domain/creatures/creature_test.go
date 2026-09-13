@@ -47,8 +47,8 @@ func TestDefend(t *testing.T) {
 		var attack float64 = 70
 		elf.Defend(attack)
 
-		if elf.attributes.GetHealth() != expected {
-			t.Errorf("expected: %f, got: %f", expected, elf.attributes.GetHealth())
+		if elf.attributes.Health() != expected {
+			t.Errorf("expected: %f, got: %f", expected, elf.attributes.Health())
 		}
 	})
 
@@ -58,8 +58,8 @@ func TestDefend(t *testing.T) {
 		var attack float64 = 200
 		err := elf.Defend(attack)
 
-		if elf.attributes.GetHealth() != expectedHealth {
-			t.Errorf("expected: %f, got: %f", expectedHealth, elf.attributes.GetHealth())
+		if elf.attributes.Health() != expectedHealth {
+			t.Errorf("expected: %f, got: %f", expectedHealth, elf.attributes.Health())
 		}
 		if !err.Is(expectedError) {
 			t.Errorf("expected: %v, got: %v", expectedError, err)
@@ -103,8 +103,8 @@ func TestHeal(t *testing.T) {
 
 			dwarf.Heal(param.potion)
 
-			if dwarf.attributes.GetHealth() != param.expected {
-				t.Errorf("expected: %f, got: %f", param.expected, dwarf.attributes.GetHealth())
+			if dwarf.attributes.Health() != param.expected {
+				t.Errorf("expected: %f, got: %f", param.expected, dwarf.attributes.Health())
 			}
 		})
 	}
@@ -161,8 +161,8 @@ func TestStrengthen(t *testing.T) {
 
 			wizard.Strengthen(param.potion)
 
-			if wizard.attributes.GetStrength() != param.expected {
-				t.Errorf("expected: %f, got: %f", param.expected, wizard.attributes.GetStrength())
+			if wizard.attributes.Strength() != param.expected {
+				t.Errorf("expected: %f, got: %f", param.expected, wizard.attributes.Strength())
 			}
 		})
 	}
